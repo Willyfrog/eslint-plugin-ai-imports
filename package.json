@@ -1,0 +1,30 @@
+{
+  "name": "eslint-ai-imports",
+  "version": "1.0.0",
+  "description": "ESLint plugin to enforce using jest.mocked() instead of type casting",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "Guillermo Vayá Pérez <guivaya@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.1",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin",
+    "jest",
+    "typescript"
+  ],
+  "peerDependencies": {
+    "eslint": ">=6.0.0"
+  },
+  "dependencies": {
+    "eslint": ">=6.0.0"
+  }
+}
