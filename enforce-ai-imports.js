@@ -15,22 +15,44 @@ module.exports = {
         }
     },
     create(context) {
+        // Helper function to check if a type assertion is using jest.Mock
+        function isJestMockTypeAssertion(typeAssertion) {
+            return typeAssertion.typeAnnotation.type === 'TSTypeReference' &&
+                typeAssertion.typeAnnotation.typeName &&
+                ((typeAssertion.typeAnnotation.typeName.type === 'TSQualifiedName' &&
+                  typeAssertion.typeAnnotation.typeName.left.name === 'jest' &&
+                  typeAssertion.typeAnnotation.typeName.right.name === 'Mock') ||
+                 (typeAssertion.typeAnnotation.typeName.type === 'Identifier' &&
+                  typeAssertion.typeAnnotation.typeName.name === 'Mock' &&
+                  context.getScope().through.some(ref => 
+                    ref.identifier.name === 'jest' && ref.resolved)));
+        }
+
         return {
-            // Look for member expressions where the object is a TypeAssertion
-            "MemberExpression[object.type='TSAsExpression'][property.name='mockImplementation']"(node) {
+            // Check for any TSAsExpression that uses jest.Mock
+            "TSAsExpression"(node) {
+                if (isJestMockTypeAssertion(node)) {
+                    context.report({
+                        node,
+                        messageId: "useJestMocked",
+                        fix: function(fixer) {
+                            const sourceCode = context.getSourceCode();
+                            const expressionText = sourceCode.getText(node.expression);
+                            
+                            return fixer.replaceText(
+                                node,
+                                `jest.mocked(${expressionText})`
+                            );
+                        }
+                    });
+                }
+            },
+            
+            // Also check for MemberExpressions where the object is a TSAsExpression using jest.Mock
+            "MemberExpression[object.type='TSAsExpression']"(node) {
                 const typeAssertion = node.object;
                 
-                // Check if the type assertion is using jest.Mock
-                if (typeAssertion.typeAnnotation.type === 'TSTypeReference' &&
-                    typeAssertion.typeAnnotation.typeName &&
-                    ((typeAssertion.typeAnnotation.typeName.type === 'TSQualifiedName' &&
-                      typeAssertion.typeAnnotation.typeName.left.name === 'jest' &&
-                      typeAssertion.typeAnnotation.typeName.right.name === 'Mock') ||
-                     (typeAssertion.typeAnnotation.typeName.type === 'Identifier' &&
-                      typeAssertion.typeAnnotation.typeName.name === 'Mock' &&
-                      context.getScope().through.some(ref => 
-                        ref.identifier.name === 'jest' && ref.resolved)))) {
-                    
+                if (isJestMockTypeAssertion(typeAssertion)) {
                     context.report({
                         node,
                         messageId: "useJestMocked",
