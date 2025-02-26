@@ -4,8 +4,8 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'eslint-ai-imports'],
+  plugins: ['@typescript-eslint', 'ai-imports'],
   rules: {
-    'eslint-ai-imports/jest-mocked': 'error',
+    'ai-imports/jest-mocked': 'error',
   },
 }; 

@@ -16,13 +16,13 @@ async function runTest() {
           jsx: true,
         },
       },
-      plugins: ['@typescript-eslint', 'eslint-ai-imports'],
+      plugins: ['@typescript-eslint', 'ai-imports'],
       rules: {
-        'eslint-ai-imports/jest-mocked': 'error',
+        'ai-imports/jest-mocked': 'error',
       },
     },
     plugins: {
-      'eslint-ai-imports': require('./index'),
+      'ai-imports': require('./index'),
     },
     fix: true, // Enable auto-fixing
   });

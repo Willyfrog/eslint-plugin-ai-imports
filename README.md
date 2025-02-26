@@ -1,11 +1,11 @@
-# eslint-ai-imports
+# eslint-plugin-ai-imports
 
 An ESLint plugin that enforces using `jest.mocked()` instead of type casting with `jest.Mock`.
 
 ## Installation
 
 ```bash
-npm install eslint-ai-imports --save-dev
+npm install eslint-plugin-ai-imports --save-dev
 ```
 
 ## Usage
@@ -15,9 +15,9 @@ Add the plugin to your ESLint configuration:
 ```js
 // .eslintrc.js
 module.exports = {
-  plugins: ['eslint-ai-imports'],
+  plugins: ['ai-imports'],
   rules: {
-    'eslint-ai-imports/jest-mocked': 'error'
+    'ai-imports/jest-mocked': 'error'
   }
 };
 ```

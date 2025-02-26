@@ -1,5 +1,5 @@
 {
-  "name": "eslint-ai-imports",
+  "name": "eslint-plugin-ai-imports",
   "version": "1.0.0",
   "description": "ESLint plugin to enforce using jest.mocked() instead of type casting",
   "main": "index.js",
@@ -22,9 +22,9 @@
     "typescript"
   ],
   "peerDependencies": {
-    "eslint": ">=6.0.0"
+    "eslint": ">=8.0.0"
   },
   "dependencies": {
-    "eslint": ">=6.0.0"
+    "eslint": ">=8.0.0"
   }
 }
